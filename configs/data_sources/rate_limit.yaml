@@ -1,0 +1,38 @@
+# Tushare API 限速配置
+# 严格执行限速，避免触发冷却期
+
+tushare:
+  # 基础限速配置
+  base_interval: 0.6  # 每次请求之间的最小间隔（秒）
+
+  # 批次限速配置
+  batch_limits:
+    - requests: 50      # 连续请求50次后
+      cooldown: 60      # 冷却60秒
+    - requests: 200     # 连续请求200次后
+      cooldown: 300     # 冷却300秒（5分钟）
+
+  # 重试策略
+  retry:
+    max_attempts: 3                    # 最大重试次数
+    initial_backoff: 2.0               # 初始退避时间（秒）
+    max_backoff: 60.0                  # 最大退避时间（秒）
+    exponential_base: 2.0              # 指数退避基数
+    cooldown_detection_keywords:       # 冷却期检测关键词
+      - "频率"
+      - "冷却"
+      - "限制"
+      - "抱歉"
+    cooldown_wait: 360                 # 检测到冷却期后等待时间（秒）
+
+  # 接口特定限速（可选，覆盖base_interval）
+  endpoints:
+    fund_daily:
+      interval: 0.6
+      priority: high
+    index_daily:
+      interval: 0.6
+      priority: high
+    daily:
+      interval: 0.6
+      priority: medium

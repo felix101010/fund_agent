@@ -1,0 +1,282 @@
+# 主题知识库配置
+# 定义所有可交易主题及其属性
+
+themes:
+  # 1. 人工智能主题
+  - theme_id: ai
+    theme_name: 人工智能
+    theme_category: tech
+    volatility_level: high
+    liquidity_level: high
+    policy_sensitive: true
+    description: AI大模型、算力、智能应用
+    keywords:
+      - 人工智能
+      - AI
+      - 大模型
+      - ChatGPT
+      - 算力
+      - GPU
+      - 智能驾驶
+    overseas_indices:
+      - QQQ
+      - XLK
+    status: active
+
+  # 2. 芯片半导体主题
+  - theme_id: chip
+    theme_name: 芯片半导体
+    theme_category: tech
+    volatility_level: high
+    liquidity_level: high
+    policy_sensitive: true
+    description: 芯片设计、制造、设备、材料
+    keywords:
+      - 芯片
+      - 半导体
+      - 集成电路
+      - 光刻机
+      - 晶圆
+      - EDA
+      - 封测
+    overseas_indices:
+      - SMH
+      - SOXX
+    status: active
+
+  # 3. 新能源车主题
+  - theme_id: ev
+    theme_name: 新能源车
+    theme_category: energy
+    volatility_level: high
+    liquidity_level: high
+    policy_sensitive: true
+    description: 电动车、动力电池、充电桩
+    keywords:
+      - 新能源车
+      - 电动车
+      - 动力电池
+      - 锂电池
+      - 充电桩
+      - 智能驾驶
+    overseas_indices:
+      - DRIV
+      - LIT
+    status: active
+
+  # 4. 光伏主题
+  - theme_id: solar
+    theme_name: 光伏
+    theme_category: energy
+    volatility_level: high
+    liquidity_level: medium
+    policy_sensitive: true
+    description: 光伏组件、逆变器、硅料
+    keywords:
+      - 光伏
+      - 太阳能
+      - 硅料
+      - 组件
+      - 逆变器
+    overseas_indices:
+      - TAN
+      - ICLN
+    status: active
+
+  # 5. 储能主题
+  - theme_id: storage
+    theme_name: 储能
+    theme_category: energy
+    volatility_level: high
+    liquidity_level: medium
+    policy_sensitive: true
+    description: 储能系统、电池、电网侧储能
+    keywords:
+      - 储能
+      - 电池
+      - 电化学储能
+      - 钠离子电池
+    overseas_indices:
+      - GRID
+    status: active
+
+  # 6. 创新药主题
+  - theme_id: pharma
+    theme_name: 创新药
+    theme_category: healthcare
+    volatility_level: medium
+    liquidity_level: medium
+    policy_sensitive: true
+    description: 创新药、生物制药、CXO
+    keywords:
+      - 创新药
+      - 生物制药
+      - CXO
+      - 抗体药
+      - 基因治疗
+    overseas_indices:
+      - IBB
+      - XBI
+    status: active
+
+  # 7. 医疗器械主题
+  - theme_id: medtech
+    theme_name: 医疗器械
+    theme_category: healthcare
+    volatility_level: medium
+    liquidity_level: medium
+    policy_sensitive: false
+    description: 医疗设备、耗材、IVD
+    keywords:
+      - 医疗器械
+      - 医疗设备
+      - 耗材
+      - IVD
+      - 影像设备
+    overseas_indices:
+      - IHI
+    status: active
+
+  # 8. 军工主题
+  - theme_id: defense
+    theme_name: 军工
+    theme_category: defense
+    volatility_level: medium
+    liquidity_level: medium
+    policy_sensitive: true
+    description: 航空航天、军工电子、船舶
+    keywords:
+      - 军工
+      - 国防
+      - 航空
+      - 航天
+      - 导弹
+      - 军工电子
+    overseas_indices:
+      - ITA
+      - XAR
+    status: active
+
+  # 9. 消费主题
+  - theme_id: consumer
+    theme_name: 消费
+    theme_category: consumer
+    volatility_level: low
+    liquidity_level: high
+    policy_sensitive: false
+    description: 食品饮料、白酒、零售
+    keywords:
+      - 消费
+      - 白酒
+      - 食品
+      - 饮料
+      - 零售
+    overseas_indices:
+      - XLP
+      - XLY
+    status: active
+
+  # 10. 金融主题
+  - theme_id: finance
+    theme_name: 金融
+    theme_category: finance
+    volatility_level: medium
+    liquidity_level: high
+    policy_sensitive: true
+    description: 银行、券商、保险
+    keywords:
+      - 金融
+      - 银行
+      - 券商
+      - 保险
+      - 金融科技
+    overseas_indices:
+      - XLF
+    status: active
+
+  # 11. 红利主题
+  - theme_id: dividend
+    theme_name: 红利
+    theme_category: value
+    volatility_level: low
+    liquidity_level: high
+    policy_sensitive: false
+    description: 高股息、稳定分红
+    keywords:
+      - 红利
+      - 股息
+      - 分红
+      - 高股息
+    overseas_indices:
+      - VYM
+      - SCHD
+    status: active
+
+  # 12. 港股科技主题
+  - theme_id: hktech
+    theme_name: 港股科技
+    theme_category: tech
+    volatility_level: high
+    liquidity_level: high
+    policy_sensitive: true
+    description: 恒生科技、中概互联
+    keywords:
+      - 港股
+      - 恒生科技
+      - 中概股
+      - 互联网
+    overseas_indices:
+      - KWEB
+    status: active
+
+  # 13. 机器人主题
+  - theme_id: robot
+    theme_name: 机器人
+    theme_category: tech
+    volatility_level: high
+    liquidity_level: medium
+    policy_sensitive: true
+    description: 工业机器人、服务机器人、人形机器人
+    keywords:
+      - 机器人
+      - 工业机器人
+      - 人形机器人
+      - 自动化
+    overseas_indices:
+      - ROBO
+    status: active
+
+  # 14. 卫星产业主题
+  - theme_id: satellite
+    theme_name: 卫星产业
+    theme_category: tech
+    volatility_level: high
+    liquidity_level: low
+    policy_sensitive: true
+    description: 卫星制造、卫星互联网、北斗
+    keywords:
+      - 卫星
+      - 卫星互联网
+      - 北斗
+      - 低轨卫星
+    overseas_indices:
+      - UFO
+    status: active
+
+  # 15. 算力基础设施主题
+  - theme_id: compute
+    theme_name: 算力基础设施
+    theme_category: tech
+    volatility_level: high
+    liquidity_level: medium
+    policy_sensitive: true
+    description: 数据中心、服务器、光模块
+    keywords:
+      - 算力
+      - 数据中心
+      - 服务器
+      - 光模块
+      - 液冷
+    overseas_indices:
+      - CLOU
+    status: active

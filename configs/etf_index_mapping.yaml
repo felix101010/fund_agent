@@ -1,0 +1,13 @@
+# ETF-指数手动映射表
+# 用于补充Tushare benchmark字段无法自动匹配的情况
+
+manual_mappings:
+  # 示例：如果某个ETF的benchmark名称无法自动匹配到指数代码
+  # - etf_code: 515980.SH
+  #   etf_name: 人工智能ETF
+  #   benchmark_name: 中证人工智能主题指数收益率
+  #   tracking_index: 931071.CSI
+  #   confidence: manual_high
+  #   note: 手动添加的映射
+
+  # 根据实际运行结果，在这里添加需要手动映射的ETF

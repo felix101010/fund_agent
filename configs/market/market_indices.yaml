@@ -1,0 +1,88 @@
+# 市场层指数配置
+# 用于判断市场环境、风险偏好、风格轮动
+
+market_indices:
+  # 宽基指数
+  broad_market:
+    - symbol: 000001.SH
+      name: 上证指数
+      role: benchmark
+      description: A股市场基准
+
+    - symbol: 000300.SH
+      name: 沪深300
+      role: large_cap
+      description: 大盘蓝筹代表
+
+    - symbol: 000905.CSI
+      name: 中证500
+      role: mid_cap
+      description: 中盘成长代表
+
+    - symbol: 000852.CSI
+      name: 中证1000
+      role: small_cap
+      description: 小盘股代表
+
+    - symbol: 932000.CSI
+      name: 中证2000
+      role: small_cap
+      description: 中小盘代表
+
+    - symbol: 000985.CSI
+      name: 中证全指
+      role: all_market
+      description: 全市场代表
+
+    - symbol: 399006.SZ
+      name: 创业板指
+      role: growth
+      description: 成长风格代表
+
+    - symbol: 000688.SH
+      name: 科创50
+      role: innovation
+      description: 科技创新代表
+
+  # 风格指数
+  style_indices:
+    - symbol: 000922.CSI
+      name: 中证红利
+      role: value
+      description: 价值风格/高股息
+
+    - symbol: 000918.CSI
+      name: 中证成长
+      role: growth
+      description: 成长风格
+
+    - symbol: 000860.CSI
+      name: 中证央企
+      role: soe
+      description: 央企国企
+
+# 市场环境判断规则
+market_regime:
+  bull_market:
+    - 沪深300上涨 > 5%
+    - 成交额放大 > 20%
+    - 风险偏好: 高
+
+  bear_market:
+    - 沪深300下跌 > 5%
+    - 成交额萎缩 > 20%
+    - 风险偏好: 低
+
+  range_market:
+    - 沪深300波动 < 3%
+    - 风险偏好: 中性
+
+# 风格轮动判断
+style_rotation:
+  large_vs_small:
+    indicator: 沪深300 / 中证1000
+    threshold: 1.05
+
+  growth_vs_value:
+    indicator: 中证成长 / 中证红利
+    threshold: 1.03

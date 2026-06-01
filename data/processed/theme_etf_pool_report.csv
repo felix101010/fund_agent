@@ -1,0 +1,23 @@
+﻿theme,theme_name,primary_index_code,primary_index_name,matched_etf_count,selected_etf_count,best_etf,best_avg_amount_20d,status,warning
+ai,人工智能,931071.CSI,中证人工智能主题指数,5,3,159819.SZ,819993068.4999999,ok,
+chip,芯片,H30007.CSI,中华芯片指数,7,3,588780.SH,324676031.0,ok,
+semiconductor,半导体,H30184.CSI,中华半导体指数,9,3,159516.SZ,3129711785.5,ok,
+consumer_electronics,消费电子,931494.CSI,中证消费电子主题指数,8,3,159732.SZ,386020127.99999994,ok,
+compute,算力基础设施,931865.CSI,中证算力基础设施指数,9,3,159516.SZ,3129711785.5,ok,
+robot,机器人,H30590.CSI,中华机器人指数,13,3,562500.SH,1342817184.5,ok,
+satellite,卫星产业,931594.CSI,中证卫星产业指数,0,0,,0.0,no_etf_found,No ETF tracks index 931594.CSI
+ev,新能源车,399417.SZ,国证新能源车指数,5,1,516160.SH,304632687.00000006,ok,
+solar,光伏,931151.CSI,中证光伏产业指数,1,1,560980.SH,43018131.0,ok,
+power_grid,电网设备,931663.CSI,中证电网设备主题指数,0,0,,0.0,no_etf_found,No ETF tracks index 931663.CSI
+storage,储能,931746.CSI,中证储能产业指数,0,0,,0.0,no_etf_found,No ETF tracks index 931746.CSI
+battery,电池,881281.WI,电池指数,0,0,,0.0,no_etf_found,No ETF tracks index 881281.WI
+pharma,创新药,931152.CSI,中证创新药产业指数,1,1,159297.SZ,109159181.00000001,ok,
+medtech,医疗器械,931464.CSI,中证医疗器械指数,0,0,,0.0,no_etf_found,No ETF tracks index 931464.CSI
+healthcare,医药,000933.SH,中证医药指数,9,3,512290.SH,104870160.5,ok,
+defense,军工,399967.SZ,中证军工指数,1,1,512710.SH,459145762.5,ok,
+consumer,消费,000932.SH,中证消费指数,18,3,159732.SZ,386020127.99999994,ok,
+liquor,白酒,399997.SZ,中证白酒指数,0,0,,0.0,no_etf_found,No ETF tracks index 399997.SZ
+finance,金融,000934.SH,中证金融指数,15,3,159299.SZ,21283997.5,ok,
+dividend,红利,000922.CSI,中证红利指数,18,3,159758.SZ,79870848.0,ok,
+hktech,港股科技,HSTECH.HI,恒生科技指数,0,0,,0.0,no_etf_found,No ETF tracks index HSTECH.HI
+metal,有色金属,000819.SH,中证有色金属指数,4,1,159881.SZ,15822029.0,ok,

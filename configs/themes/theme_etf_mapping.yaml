@@ -1,0 +1,209 @@
+# 主题-ETF映射配置
+# 定义每个主题对应的交易工具（ETF）
+
+mappings:
+  # 1. 人工智能主题
+  - theme_id: ai
+    etfs:
+      - symbol: 515980.SH
+        name: 人工智能ETF
+        role: primary
+        tracking_index: 931071.CSI
+        liquidity_score: 85
+        description: 主力交易工具
+
+  # 2. 芯片半导体主题
+  - theme_id: chip
+    etfs:
+      - symbol: 159995.SZ
+        name: 芯片ETF
+        role: primary
+        tracking_index: 931865.CSI
+        liquidity_score: 95
+        description: 流动性最好
+
+      - symbol: 515790.SH
+        name: 科创芯片ETF
+        role: backup
+        tracking_index: 931865.CSI
+        liquidity_score: 75
+        description: 科创板标的
+
+  # 3. 新能源车主题
+  - theme_id: ev
+    etfs:
+      - symbol: 515030.SH
+        name: 新能源车ETF
+        role: primary
+        tracking_index: 399417.SZ
+        liquidity_score: 90
+        description: 主力工具
+
+      - symbol: 516160.SH
+        name: 新能源ETF
+        role: backup
+        tracking_index: 399417.SZ
+        liquidity_score: 70
+        description: 备选工具
+
+  # 4. 光伏主题
+  - theme_id: solar
+    etfs:
+      - symbol: 159806.SZ
+        name: 光伏ETF
+        role: primary
+        tracking_index: 931151.CSI
+        liquidity_score: 80
+        description: 主力工具
+
+  # 5. 储能主题
+  - theme_id: storage
+    etfs:
+      - symbol: 159611.SZ
+        name: 储能ETF
+        role: primary
+        tracking_index: 931746.CSI
+        liquidity_score: 70
+        description: 主力工具
+
+  # 6. 创新药主题
+  - theme_id: pharma
+    etfs:
+      - symbol: 512290.SH
+        name: 生物医药ETF
+        role: primary
+        tracking_index: 931152.CSI
+        liquidity_score: 85
+        description: 主力工具
+
+      - symbol: 512010.SH
+        name: 医药ETF
+        role: backup
+        tracking_index: 000933.CSI
+        liquidity_score: 90
+        description: 备选工具
+
+  # 7. 医疗器械主题
+  - theme_id: medtech
+    etfs:
+      - symbol: 159828.SZ
+        name: 医疗器械ETF
+        role: primary
+        tracking_index: 931464.CSI
+        liquidity_score: 75
+        description: 主力工具
+
+  # 8. 军工主题
+  - theme_id: defense
+    etfs:
+      - symbol: 512660.SH
+        name: 军工ETF
+        role: primary
+        tracking_index: 399967.SZ
+        liquidity_score: 85
+        description: 主力工具
+
+      - symbol: 512810.SH
+        name: 军工龙头ETF
+        role: backup
+        tracking_index: 399967.SZ
+        liquidity_score: 70
+        description: 备选工具
+
+  # 9. 消费主题
+  - theme_id: consumer
+    etfs:
+      - symbol: 159928.SZ
+        name: 消费ETF
+        role: primary
+        tracking_index: 000932.CSI
+        liquidity_score: 90
+        description: 主力工具
+
+      - symbol: 512600.SH
+        name: 主要消费ETF
+        role: backup
+        tracking_index: 000932.CSI
+        liquidity_score: 80
+        description: 备选工具
+
+  # 10. 金融主题
+  - theme_id: finance
+    etfs:
+      - symbol: 512000.SH
+        name: 券商ETF
+        role: primary
+        tracking_index: 000934.CSI
+        liquidity_score: 95
+        description: 流动性最好
+
+      - symbol: 512800.SH
+        name: 银行ETF
+        role: backup
+        tracking_index: 000934.CSI
+        liquidity_score: 85
+        description: 银行细分
+
+  # 11. 红利主题
+  - theme_id: dividend
+    etfs:
+      - symbol: 510880.SH
+        name: 红利ETF
+        role: primary
+        tracking_index: 000922.CSI
+        liquidity_score: 90
+        description: 主力工具
+
+      - symbol: 515180.SH
+        name: 红利低波ETF
+        role: backup
+        tracking_index: 000922.CSI
+        liquidity_score: 75
+        description: 低波动版本
+
+  # 12. 港股科技主题
+  - theme_id: hktech
+    etfs:
+      - symbol: 513180.SH
+        name: 恒生科技ETF
+        role: primary
+        tracking_index: HSTECH.HI
+        liquidity_score: 90
+        description: 主力工具
+
+      - symbol: 513050.SH
+        name: 中概互联ETF
+        role: backup
+        tracking_index: HSTECH.HI
+        liquidity_score: 85
+        description: 中概股
+
+  # 13. 机器人主题
+  - theme_id: robot
+    etfs:
+      - symbol: 159770.SZ
+        name: 机器人ETF
+        role: primary
+        tracking_index: 931486.CSI
+        liquidity_score: 75
+        description: 主力工具
+
+  # 14. 卫星产业主题
+  - theme_id: satellite
+    etfs:
+      - symbol: 159847.SZ
+        name: 卫星产业ETF
+        role: primary
+        tracking_index: 931746.CSI
+        liquidity_score: 60
+        description: 主力工具
+
+  # 15. 算力基础设施主题
+  - theme_id: compute
+    etfs:
+      - symbol: 516980.SH
+        name: 算力ETF
+        role: primary
+        tracking_index: 931865.CSI
+        liquidity_score: 70
+        description: 主力工具

@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: fund_quant_clickhouse
+    ports:
+      - "8123:8123"  # HTTP 接口
+      - "9000:9000"  # Native 接口
+    volumes:
+      - ./data/clickhouse:/var/lib/clickhouse
+      - ./logs/clickhouse:/var/log/clickhouse-server
+    environment:
+      CLICKHOUSE_DB: quant
+      CLICKHOUSE_DEFAULT_ACCESS_MANAGEMENT: 1
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    networks:
+      - fund_quant_network
+
+  redis:
+    image: redis:7-alpine
+    container_name: fund_quant_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./data/redis:/data
+    command: redis-server --appendonly yes
+    networks:
+      - fund_quant_network
+
+networks:
+  fund_quant_network:
+    driver: bridge

@@ -1,0 +1,221 @@
+# 主题-指数映射配置
+# primary_index: 主题分析指数，用于强度分析和排名
+# acceptable_tracking_indices: 允许作为该主题交易ETF的跟踪指数（指数代码或名称关键词）
+
+mappings:
+  # 科技类
+  - theme_id: ai
+    theme_name: 人工智能
+    primary_index:
+      code: 931071.CSI
+      name: 中证人工智能主题指数
+    acceptable_tracking_indices:
+      - 931071.CSI
+      - 人工智能
+
+  - theme_id: chip
+    theme_name: 芯片
+    primary_index:
+      code: H30007.CSI
+      name: 中华芯片指数
+    acceptable_tracking_indices:
+      - H30007.CSI
+      - 芯片
+
+  - theme_id: semiconductor
+    theme_name: 半导体
+    primary_index:
+      code: H30184.CSI
+      name: 中华半导体指数
+    acceptable_tracking_indices:
+      - H30184.CSI
+      - 半导体
+
+  - theme_id: consumer_electronics
+    theme_name: 消费电子
+    primary_index:
+      code: 931494.CSI
+      name: 中证消费电子主题指数
+    acceptable_tracking_indices:
+      - 931494.CSI
+      - 消费电子
+
+  - theme_id: compute
+    theme_name: 算力基础设施
+    primary_index:
+      code: 931865.CSI
+      name: 中证算力基础设施指数
+    acceptable_tracking_indices:
+      - 931865.CSI
+      - 算力
+      - 半导
+
+  - theme_id: robot
+    theme_name: 机器人
+    primary_index:
+      code: H30590.CSI
+      name: 中华机器人指数
+    acceptable_tracking_indices:
+      - H30590.CSI
+      - 机器人
+
+  - theme_id: satellite
+    theme_name: 卫星产业
+    primary_index:
+      code: 931594.CSI
+      name: 中证卫星产业指数
+    acceptable_tracking_indices:
+      - 931594.CSI
+      - 卫星
+
+  # 能源类
+  - theme_id: ev
+    theme_name: 新能源车
+    primary_index:
+      code: 399417.SZ
+      name: 国证新能源车指数
+    acceptable_tracking_indices:
+      - 399417.SZ
+      - 新能源车
+      - 新能源汽车
+      - 新能源
+      - 创业板新能源
+
+  - theme_id: solar
+    theme_name: 光伏
+    primary_index:
+      code: 931151.CSI
+      name: 中证光伏产业指数
+    acceptable_tracking_indices:
+      - 931151.CSI
+      - 光伏
+
+  - theme_id: power_grid
+    theme_name: 电网设备
+    primary_index:
+      code: 931663.CSI
+      name: 中证电网设备主题指数
+    acceptable_tracking_indices:
+      - 931663.CSI
+      - 电网
+
+  - theme_id: storage
+    theme_name: 储能
+    primary_index:
+      code: 931746.CSI
+      name: 中证储能产业指数
+    acceptable_tracking_indices:
+      - 931746.CSI
+      - 储能
+      - 储能产业
+
+  - theme_id: battery
+    theme_name: 电池
+    primary_index:
+      code: 881281.WI
+      name: 电池指数
+    acceptable_tracking_indices:
+      - 881281.WI
+      - 电池
+      - 新能源电池
+
+  # 医药类
+  - theme_id: pharma
+    theme_name: 创新药
+    primary_index:
+      code: 931152.CSI
+      name: 中证创新药产业指数
+    acceptable_tracking_indices:
+      - 931152.CSI
+      - 创新药
+
+  - theme_id: medtech
+    theme_name: 医疗器械
+    primary_index:
+      code: 931464.CSI
+      name: 中证医疗器械指数
+    acceptable_tracking_indices:
+      - 931464.CSI
+      - 医疗器械
+
+  - theme_id: healthcare
+    theme_name: 医药
+    primary_index:
+      code: 000933.SH
+      name: 中证医药指数
+    acceptable_tracking_indices:
+      - 000933.SH
+      - 医药
+      - 医疗
+
+  # 其他
+  - theme_id: defense
+    theme_name: 军工
+    primary_index:
+      code: 399967.SZ
+      name: 中证军工指数
+    acceptable_tracking_indices:
+      - 399967.SZ
+      - 军工
+      - 国防
+
+  - theme_id: consumer
+    theme_name: 消费
+    primary_index:
+      code: 000932.SH
+      name: 中证消费指数
+    acceptable_tracking_indices:
+      - 000932.SH
+      - 消费
+
+  - theme_id: liquor
+    theme_name: 白酒
+    primary_index:
+      code: 399997.SZ
+      name: 中证白酒指数
+    acceptable_tracking_indices:
+      - 399997.SZ
+      - 白酒
+      - 酒
+
+  - theme_id: finance
+    theme_name: 金融
+    primary_index:
+      code: 000934.SH
+      name: 中证金融指数
+    acceptable_tracking_indices:
+      - 000934.SH
+      - 金融
+      - 银行
+      - 证券
+      - 保险
+
+  - theme_id: dividend
+    theme_name: 红利
+    primary_index:
+      code: 000922.CSI
+      name: 中证红利指数
+    acceptable_tracking_indices:
+      - 000922.CSI
+      - 红利
+      - 股息
+
+  - theme_id: hktech
+    theme_name: 港股科技
+    primary_index:
+      code: HSTECH.HI
+      name: 恒生科技指数
+    acceptable_tracking_indices:
+      - HSTECH.HI
+      - 恒生科技
+      - 港股科技
+
+  - theme_id: metal
+    theme_name: 有色金属
+    primary_index:
+      code: 000819.SH
+      name: 中证有色金属指数
+    acceptable_tracking_indices:
+      - 000819.SH
+      - 有色金属
+      - 有色
