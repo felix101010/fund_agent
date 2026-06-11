@@ -1,209 +1,206 @@
-# 主题-ETF映射配置
-# 定义每个主题对应的交易工具（ETF）
+# 主题-ETF直接映射配置
+# 每个主题指定唯一的交易ETF（不使用规则匹配）
 
 mappings:
-  # 1. 人工智能主题
+  # 科技类
   - theme_id: ai
-    etfs:
-      - symbol: 515980.SH
-        name: 人工智能ETF
-        role: primary
-        tracking_index: 931071.CSI
-        liquidity_score: 85
-        description: 主力交易工具
+    theme_name: 人工智能
+    primary_index:
+      code: 931071.CSI
+      name: 中证人工智能主题指数
+    etf:
+      code: 515070.SH
+      name: 人工智能ETF华夏
 
-  # 2. 芯片半导体主题
   - theme_id: chip
-    etfs:
-      - symbol: 159995.SZ
-        name: 芯片ETF
-        role: primary
-        tracking_index: 931865.CSI
-        liquidity_score: 95
-        description: 流动性最好
+    theme_name: 芯片
+    primary_index:
+      code: H30007.CSI
+      name: 中华芯片指数
+    etf:
+      code: 516350.SH
+      name: 芯片ETF易方达
 
-      - symbol: 515790.SH
-        name: 科创芯片ETF
-        role: backup
-        tracking_index: 931865.CSI
-        liquidity_score: 75
-        description: 科创板标的
+  - theme_id: semiconductor
+    theme_name: 半导体
+    primary_index:
+      code: H30184.CSI
+      name: 中华半导体指数
+    etf:
+      code: 159516.SZ
+      name: 半导体设备ETF国泰
 
-  # 3. 新能源车主题
-  - theme_id: ev
-    etfs:
-      - symbol: 515030.SH
-        name: 新能源车ETF
-        role: primary
-        tracking_index: 399417.SZ
-        liquidity_score: 90
-        description: 主力工具
+  - theme_id: consumer_electronics
+    theme_name: 消费电子
+    primary_index:
+      code: 931494.CSI
+      name: 中证消费电子主题指数
+    etf:
+      code: 561100.SH
+      name: 消费电子ETF富国
 
-      - symbol: 516160.SH
-        name: 新能源ETF
-        role: backup
-        tracking_index: 399417.SZ
-        liquidity_score: 70
-        description: 备选工具
-
-  # 4. 光伏主题
-  - theme_id: solar
-    etfs:
-      - symbol: 159806.SZ
-        name: 光伏ETF
-        role: primary
-        tracking_index: 931151.CSI
-        liquidity_score: 80
-        description: 主力工具
-
-  # 5. 储能主题
-  - theme_id: storage
-    etfs:
-      - symbol: 159611.SZ
-        name: 储能ETF
-        role: primary
-        tracking_index: 931746.CSI
-        liquidity_score: 70
-        description: 主力工具
-
-  # 6. 创新药主题
-  - theme_id: pharma
-    etfs:
-      - symbol: 512290.SH
-        name: 生物医药ETF
-        role: primary
-        tracking_index: 931152.CSI
-        liquidity_score: 85
-        description: 主力工具
-
-      - symbol: 512010.SH
-        name: 医药ETF
-        role: backup
-        tracking_index: 000933.CSI
-        liquidity_score: 90
-        description: 备选工具
-
-  # 7. 医疗器械主题
-  - theme_id: medtech
-    etfs:
-      - symbol: 159828.SZ
-        name: 医疗器械ETF
-        role: primary
-        tracking_index: 931464.CSI
-        liquidity_score: 75
-        description: 主力工具
-
-  # 8. 军工主题
-  - theme_id: defense
-    etfs:
-      - symbol: 512660.SH
-        name: 军工ETF
-        role: primary
-        tracking_index: 399967.SZ
-        liquidity_score: 85
-        description: 主力工具
-
-      - symbol: 512810.SH
-        name: 军工龙头ETF
-        role: backup
-        tracking_index: 399967.SZ
-        liquidity_score: 70
-        description: 备选工具
-
-  # 9. 消费主题
-  - theme_id: consumer
-    etfs:
-      - symbol: 159928.SZ
-        name: 消费ETF
-        role: primary
-        tracking_index: 000932.CSI
-        liquidity_score: 90
-        description: 主力工具
-
-      - symbol: 512600.SH
-        name: 主要消费ETF
-        role: backup
-        tracking_index: 000932.CSI
-        liquidity_score: 80
-        description: 备选工具
-
-  # 10. 金融主题
-  - theme_id: finance
-    etfs:
-      - symbol: 512000.SH
-        name: 券商ETF
-        role: primary
-        tracking_index: 000934.CSI
-        liquidity_score: 95
-        description: 流动性最好
-
-      - symbol: 512800.SH
-        name: 银行ETF
-        role: backup
-        tracking_index: 000934.CSI
-        liquidity_score: 85
-        description: 银行细分
-
-  # 11. 红利主题
-  - theme_id: dividend
-    etfs:
-      - symbol: 510880.SH
-        name: 红利ETF
-        role: primary
-        tracking_index: 000922.CSI
-        liquidity_score: 90
-        description: 主力工具
-
-      - symbol: 515180.SH
-        name: 红利低波ETF
-        role: backup
-        tracking_index: 000922.CSI
-        liquidity_score: 75
-        description: 低波动版本
-
-  # 12. 港股科技主题
-  - theme_id: hktech
-    etfs:
-      - symbol: 513180.SH
-        name: 恒生科技ETF
-        role: primary
-        tracking_index: HSTECH.HI
-        liquidity_score: 90
-        description: 主力工具
-
-      - symbol: 513050.SH
-        name: 中概互联ETF
-        role: backup
-        tracking_index: HSTECH.HI
-        liquidity_score: 85
-        description: 中概股
-
-  # 13. 机器人主题
   - theme_id: robot
-    etfs:
-      - symbol: 159770.SZ
-        name: 机器人ETF
-        role: primary
-        tracking_index: 931486.CSI
-        liquidity_score: 75
-        description: 主力工具
+    theme_name: 机器人
+    primary_index:
+      code: H30590.CSI
+      name: 中华机器人指数
+    etf:
+      code: 562500.SH
+      name: 机器人ETF华夏
 
-  # 14. 卫星产业主题
   - theme_id: satellite
-    etfs:
-      - symbol: 159847.SZ
-        name: 卫星产业ETF
-        role: primary
-        tracking_index: 931746.CSI
-        liquidity_score: 60
-        description: 主力工具
+    theme_name: 卫星产业
+    primary_index:
+      code: 931594.CSI
+      name: 中证卫星产业指数
+    etf:
+      code: 159206.SZ
+      name: 卫星ETF永赢
 
-  # 15. 算力基础设施主题
-  - theme_id: compute
-    etfs:
-      - symbol: 516980.SH
-        name: 算力ETF
-        role: primary
-        tracking_index: 931865.CSI
-        liquidity_score: 70
-        description: 主力工具
+  # 能源类
+  - theme_id: solar
+    theme_name: 光伏
+    primary_index:
+      code: 931151.CSI
+      name: 中证光伏产业指数
+    etf:
+      code: 516290.SH
+      name: 光伏ETF汇添富
+
+  - theme_id: power_grid
+    theme_name: 电网设备
+    primary_index:
+      code: 931663.CSI
+      name: 中证电网设备主题指数
+    etf:
+      code: 159326.SZ
+      name: 电网设备ETF华夏
+
+  - theme_id: storage
+    theme_name: 储能
+    primary_index:
+      code: 931746.CSI
+      name: 中证储能产业指数
+    etf:
+      code: 159611.SZ
+      name: 储能ETF华夏
+
+  - theme_id: battery
+    theme_name: 电池
+    primary_index:
+      code: 881281.WI
+      name: 电池指数
+    etf:
+      code: 561160.SH
+      name: 电池ETF富国
+
+  # 医药类
+  - theme_id: pharma
+    theme_name: 创新药
+    primary_index:
+      code: 931152.CSI
+      name: 中证创新药产业指数
+    etf:
+      code: 159992.SZ
+      name: 创新药ETF银华
+
+  - theme_id: medtech
+    theme_name: 医疗器械
+    primary_index:
+      code: 931464.CSI
+      name: 中证医疗器械指数
+    etf:
+      code: 159883.SZ
+      name: 医疗器械ETF永赢
+
+  - theme_id: healthcare
+    theme_name: 医药
+    primary_index:
+      code: 000933.SH
+      name: 中证医药指数
+    etf:
+      code: 159938.SZ
+      name: 医药ETF广发
+
+  # 其他
+  - theme_id: defense
+    theme_name: 军工
+    primary_index:
+      code: 399967.SZ
+      name: 中证军工指数
+    etf:
+      code: 512660.SH
+      name: 军工ETF国泰
+
+  - theme_id: consumer
+    theme_name: 消费
+    primary_index:
+      code: 000932.SH
+      name: 中证消费指数
+    etf:
+      code: 159928.SZ
+      name: 消费ETF汇添富
+
+  - theme_id: liquor
+    theme_name: 白酒
+    primary_index:
+      code: 399997.SZ
+      name: 中证白酒指数
+    etf:
+      code: 512690.SH
+      name: 酒ETF鹏华
+
+  # 金融类
+  - theme_id: bank
+    theme_name: 银行
+    primary_index:
+      code: 399986.SZ
+      name: 中证银行指数
+    etf:
+      code: 512700.SH
+      name: 银行ETF南方
+
+  - theme_id: securities
+    theme_name: 证券
+    primary_index:
+      code: 399975.SZ
+      name: 中证证券公司指数
+    etf:
+      code: 159016.SZ
+      name: 证券ETF广发
+
+  - theme_id: insurance
+    theme_name: 保险
+    primary_index:
+      code: 000934.SH
+      name: 中证保险指数
+    etf:
+      code: 512010.SH
+      name: 保险ETF南方
+
+  - theme_id: fintech
+    theme_name: 金融科技
+    primary_index:
+      code: 930986.CSI
+      name: 中证金融科技主题指数
+    etf:
+      code: 516100.SH
+      name: 金融科技ETF华夏
+
+  - theme_id: hktech
+    theme_name: 港股科技
+    primary_index:
+      code: HSTECH.HI
+      name: 恒生科技指数
+    etf:
+      code: 513180.SH
+      name: 恒生科技ETF华夏
+
+  - theme_id: metal
+    theme_name: 有色金属
+    primary_index:
+      code: 000819.SH
+      name: 中证有色金属指数
+    etf:
+      code: 512400.SH
+      name: 有色金属ETF南方

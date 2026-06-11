@@ -33,6 +33,9 @@ dependencies = [
     "tenacity>=8.2.3",
     "joblib>=1.3.2",
     "tqdm>=4.66.0",
+    "matplotlib>=3.10.9",
+    "mplfinance>=0.12.10b0",
+    "playwright>=1.60.0",
 ]
 
 [project.optional-dependencies]

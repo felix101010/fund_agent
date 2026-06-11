@@ -128,8 +128,8 @@ def main():
 
     parser = argparse.ArgumentParser(description='采集主题ETF历史数据')
     parser.add_argument('--input', type=str,
-                       default='data/processed/theme_etf_to_collect.csv',
-                       help='ETF清单文件路径')
+                       default='data/processed/theme_etf_list.csv',
+                       help='ETF清单文件路径（默认22个主题ETF）')
     parser.add_argument('--start-date', type=str,
                        help='开始日期 YYYYMMDD（默认1年前）')
     parser.add_argument('--end-date', type=str,
@@ -143,7 +143,7 @@ def main():
     df = pd.read_csv(args.input)
     etf_list = df['etf_code'].unique().tolist()
 
-    logger.info(f"从 {args.input} 读取到 {len(etf_list)} 只ETF")
+    logger.info(f"从 {args.input} 读取到 {len(etf_list)} 只主题ETF")
 
     # 开始采集
     collect_etf_data(
