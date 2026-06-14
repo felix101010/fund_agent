@@ -1,0 +1,23 @@
+announcement_id,stock_code,stock_name,title,announcement_type_raw,action,need_ai,need_pdf,pre_score,matched_keywords,reasons,suggested_type,suggested_action,suspicious_unclassified,suspicious_reason,keyword_hits
+1225370210,605298.SH,必得科技,江苏必得科技股份有限公司关于公司股东协议转让股份的公告,01010503||010113||011501,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370208,601567.SH,三星电气,三星电气关于向香港联交所递交H股发行上市的申请并刊发申请资料的公告,01010501||010113||012399,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370176,000710.SZ,贝瑞基因,关于将前次股东会未获通过提案再次提交股东会审议的说明公告,01010503||010112||011999,watch,False,False,18,,未分类公告，低优先级观察,possible_routine_notice,archive,False,,说明公告
+1225370150,603268.SH,松发股份,关于向特定对象发行股票申请获得中国证监会同意注册批复的公告,01010503||010113||010703,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370149,605500.SH,森林包装,独立董事提名人声明与承诺（林启法）,01010503||010113||012303,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370148,600861.SH,北京人力,北京人力董事辞职暨选举董事的公告,01010503||010113||012303,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370145,605500.SH,森林包装,独立董事提名人声明与承诺（林加连）,01010503||010113||012303,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370142,605500.SH,森林包装,独立董事提名人声明与承诺（林启军）,01010503||010113||012303,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370141,605500.SH,森林包装,森林包装集团股份有限公司关于董事会换届选举的公告,01010503||010113||012303,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370137,603809.SH,豪能股份,向不特定对象发行可转换公司债券发行提示性公告,01010503||010113||010909||010999,watch,False,False,18,,未分类公告，低优先级观察,possible_routine_notice,archive,False,,提示性公告
+1225370136,688398.SH,赛特新材,赛特新材：关于实施2025年年度权益分派调整“赛特转债”转股价格暨转股复牌的公告,01010503||010123||010915||012399,watch,False,False,18,,未分类公告，低优先级观察,possible_routine_notice,archive,False,,"权益分派, 转债, 复牌"
+1225370133,688061.SH,灿瑞科技,北京市天元律师事务所关于上海灿瑞科技股份有限公司差异化分红事项之专项法律意见,01010901||010123||012903,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370130,688726.SH,拉普拉斯,关于最近五年未被证券监管部门和证券交易所采取监管措施或处罚的公告,01010503||010123||012399,watch,False,False,18,,未分类公告，低优先级观察,possible_business_or_risk_event,manual_review,True,含高价值关键词: 处罚,处罚
+1225370129,603683.SH,晶华新材,晶华新材关于注销部分股票期权与回购注销部分限制性股票的公告,01010503||010113||011513||012325,watch,False,False,18,,未分类公告，低优先级观察,possible_business_or_risk_event,manual_review,True,含高价值关键词: 回购,回购
+1225370128,603628.SH,清源股份,关于实施2025年度权益分派时“清源转债”停止转股暨转股价格调整的提示性公告,01010503||010113||010915,watch,False,False,18,,未分类公告，低优先级观察,possible_routine_notice,archive,False,,"提示性公告, 权益分派, 转债"
+1225370123,688110.SH,东芯股份,关于公司董事暨核心技术人员辞任暨补选董事并调整董事会专门委员会成员的公告,01010503||010123||012303,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370118,688092.SH,爱科科技,杭州爱科科技股份有限公司向不特定对象发行可转换公司债券网上中签结果公告,01010503||010123||01091101||010999,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370117,603626.SH,科森科技,关于控股股东部分股份质押的公告,01010503||010113||012307,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370116,601126.SH,四方股份,四方股份关于公司副总裁辞去职务的公告,01010503||010113||012303,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370115,605167.SH,利柏特,关于实施“利柏转债”赎回暨摘牌的第二次提示性公告,01010503||010113||010919||010999,watch,False,False,18,,未分类公告，低优先级观察,possible_routine_notice,archive,False,,"提示性公告, 转债, 摘牌"
+1225370113,688797.SH,臻宝科技,臻宝科技首次公开发行股票并在科创板上市网上发行申购情况及中签率公告,01010501||01010701||010123||01021101,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,
+1225370112,605580.SH,恒盛能源,恒盛能源股份有限公司关于完成碳排放配额交易的公告,01010501||010113||012399,watch,False,False,18,,未分类公告，低优先级观察,unknown_low_priority,keep_watch,False,,

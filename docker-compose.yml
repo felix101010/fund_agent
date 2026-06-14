@@ -6,7 +6,7 @@ services:
     container_name: fund_quant_clickhouse
     ports:
       - "8123:8123"  # HTTP 接口
-      - "9000:9000"  # Native 接口
+      - "19001:9000"  # Native 接口
     volumes:
       - ./data/clickhouse:/var/lib/clickhouse
       - ./logs/clickhouse:/var/log/clickhouse-server
@@ -24,7 +24,7 @@ services:
     image: redis:7-alpine
     container_name: fund_quant_redis
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - ./data/redis:/data
     command: redis-server --appendonly yes

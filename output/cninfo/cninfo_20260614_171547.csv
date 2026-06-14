@@ -1,0 +1,6 @@
+batch_id,announcement_id,stock_code,stock_name,title,publish_time,announcement_type_raw,announcement_type,action,need_ai,need_pdf,pre_score,matched_keywords,event_type,primary_theme_id,primary_theme_name,trade_priority,final_score,risk_flags,related_stocks_count,validation_errors,postprocess_notes,error_tags,processing_status
+cninfo_20260614_171547,1225370207,600818.SH,ST中路,关于持股5%以上股东权益变动触及1%刻度的提示性公告,2026-06-15T00:00:00,01010503||010113||011501,unclassified,watch,False,False,30,,unclassified,,,watch,30,,1,,,,success
+cninfo_20260614_171547,1225370206,002718.SZ,友邦吊顶,关于购买董事、高级管理人员责任险的公告,2026-06-15T00:00:00,01010503||010112||012399,unclassified,watch,False,False,30,,unclassified,,,watch,30,,1,,,,success
+cninfo_20260614_171547,1225370205,002718.SZ,友邦吊顶,信息披露管理制度（2026年修订）,2026-06-15T00:00:00,01010503||010112||013199,unclassified,watch,False,False,30,,unclassified,,,watch,30,,1,,,,success
+cninfo_20260614_171547,1225370204,002718.SZ,友邦吊顶,对外投资管理制度（2026年修订）,2026-06-15T00:00:00,01010503||010112||013199,external_investment,analyze,True,True,85,对外投资,external_investment,,,urgent,85,,1,,当前阶段：标题级处理，未进行PDF全文解析,,success
+cninfo_20260614_171547,1225370203,002718.SZ,友邦吊顶,对外担保管理制度（2026年修订）,2026-06-15T00:00:00,01010503||010112||013199,unclassified,watch,False,False,30,,unclassified,,,watch,30,,1,,,,success

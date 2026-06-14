@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from fund_quant.data_sources.news.cls_api_collector import ClsApiCollector
 from fund_quant.data_sources.news.deduplicator import NewsDeduplicator
-from fund_quant.nlp.news_filter import NewsItem, FilterResult, SimpleRuleFilter
+from fund_quant.nlp.news_filter import NewsItem, FilterResult, SimpleRuleFilter, UnknownDecisionFilter
 from fund_quant.nlp.news_ai import AIEventExtractor, OllamaClient
 
 # 加载环境变量
@@ -133,19 +133,38 @@ def print_ai_result(event_result, verbose=False):
     # 优先使用 themes 属性（从 dataclass property），否则读 theme 字段
     if hasattr(event_result, 'themes'):
         themes = event_result.themes
-        print(f"  themes: {', '.join(themes) if themes else '无'}")
+        print(f"  themes(AI原始): {', '.join(themes) if themes else '无'}")
     else:
         theme = safe_get(event_result, 'theme', '')
-        print(f"  themes: {theme if theme else '无'}")
+        print(f"  themes(AI原始): {theme if theme else '无'}")
+
+    # 新增：标准化主题
+    primary_theme_name = safe_get(event_result, 'primary_theme_name', '')
+    primary_theme_id = safe_get(event_result, 'primary_theme_id', '')
+    if primary_theme_name:
+        print(f"  primary_theme: {primary_theme_name} ({primary_theme_id})")
 
     sub_themes = safe_get(event_result, 'sub_themes', [])
     if sub_themes:
         print(f"  sub_themes: {', '.join(sub_themes)}")
 
     print(f"  novelty_type: {safe_get(event_result, 'novelty_type', 'unknown')}")
+    print(f"  is_market_relevant: {safe_get(event_result, 'is_market_relevant', True)}")
 
     confidence = safe_get(event_result, 'confidence', 0.0)
     print(f"  confidence: {confidence:.2f}")
+
+    # 新增：评分信息
+    final_score = safe_get(event_result, 'final_score', 0.0)
+    trade_priority = safe_get(event_result, 'trade_priority', 'watch')
+    if final_score > 0:
+        print(f"  final_score: {final_score:.1f}")
+        print(f"  trade_priority: {trade_priority}")
+
+    # 新增：风险标记
+    risk_flags = safe_get(event_result, 'risk_flags', [])
+    if risk_flags:
+        print(f"  risk_flags: {', '.join(risk_flags)}")
 
     # 如果有 corrections（来自后处理器）
     if verbose:
@@ -153,6 +172,13 @@ def print_ai_result(event_result, verbose=False):
         if raw_response:
             print(f"\n  AI原始输出（前300字）:")
             print(f"  {raw_response[:300]}")
+
+    # postprocess_notes
+    postprocess_notes = safe_get(event_result, 'postprocess_notes', [])
+    if postprocess_notes and verbose:
+        print(f"  postprocess_notes:")
+        for note in postprocess_notes[:5]:  # 只显示前5条
+            print(f"    - {note}")
 
     # 关联股票
     related_stocks = safe_get(event_result, 'related_stocks', [])
@@ -163,6 +189,28 @@ def print_ai_result(event_result, verbose=False):
             name = safe_get(stock, 'name', '')
             reason = safe_get(stock, 'reason', '')
             print(f"    - {name} {code}: {reason}")
+
+    # 关联实体（非股票）
+    related_entities = safe_get(event_result, 'related_entities', [])
+    if related_entities:
+        print(f"  related_entities:")
+        for entity in related_entities:
+            name = safe_get(entity, 'name', '')
+            entity_type = safe_get(entity, 'entity_type', '')
+            print(f"    - {name} ({entity_type})")
+
+    # 新增：相关指数和ETF
+    related_indices = safe_get(event_result, 'related_indices', [])
+    related_etfs = safe_get(event_result, 'related_etfs', [])
+    if related_indices:
+        print(f"  related_indices: {', '.join(related_indices)}")
+    if related_etfs:
+        print(f"  related_etfs: {', '.join(related_etfs)}")
+
+    # 新增：候选股票池主题
+    candidate_stock_pool_theme = safe_get(event_result, 'candidate_stock_pool_theme', '')
+    if candidate_stock_pool_theme:
+        print(f"  candidate_stock_pool_theme: {candidate_stock_pool_theme}")
 
     print()
 
@@ -242,7 +290,9 @@ def main():
     print("步骤 2: 初始化规则过滤器")
     try:
         rule_filter = SimpleRuleFilter()
+        unknown_filter = UnknownDecisionFilter()
         print("✅ SimpleRuleFilter 初始化成功")
+        print("✅ UnknownDecisionFilter 初始化成功")
     except Exception as e:
         print(f"❌ 初始化规则过滤器失败: {e}")
         import traceback
@@ -336,6 +386,20 @@ def main():
             # 规则过滤
             filter_result = rule_filter.filter(news_item)
 
+            # Unknown 二次过滤
+            original_action = safe_get(filter_result, 'action', 'unknown')
+            original_need_ai = safe_get(filter_result, 'need_ai', False)
+
+            if original_action == "unknown":
+                filter_result = unknown_filter.refine(news_item, filter_result)
+                refined_action = safe_get(filter_result, 'action', 'unknown')
+                refined_need_ai = safe_get(filter_result, 'need_ai', False)
+
+                # 如果发生了变化，记录
+                if original_need_ai != refined_need_ai:
+                    stats.setdefault('unknown_refined', 0)
+                    stats['unknown_refined'] += 1
+
             action = safe_get(filter_result, 'action', 'unknown')
             need_ai = safe_get(filter_result, 'need_ai', False)
 
@@ -372,9 +436,25 @@ def main():
                 # 统计事件类型、情绪、主题
                 event_type = safe_get(event_result, 'event_type', 'unknown')
                 sentiment = safe_get(event_result, 'sentiment', 'neutral')
+                is_market_relevant = safe_get(event_result, 'is_market_relevant', True)
 
                 stats['event_types'][event_type] += 1
                 stats['sentiments'][sentiment] += 1
+
+                # 统计市场相关性
+                if is_market_relevant:
+                    stats.setdefault('market_relevant_count', 0)
+                    stats['market_relevant_count'] += 1
+
+                # 统计股票和实体数量
+                related_stocks = safe_get(event_result, 'related_stocks', [])
+                related_entities = safe_get(event_result, 'related_entities', [])
+
+                stats.setdefault('related_stock_count', 0)
+                stats['related_stock_count'] += len(related_stocks)
+
+                stats.setdefault('related_entity_count', 0)
+                stats['related_entity_count'] += len(related_entities)
 
                 # 统计主题
                 if hasattr(event_result, 'themes'):
@@ -384,7 +464,25 @@ def main():
                     themes = [t.strip() for t in theme.split(',') if t.strip()]
 
                 for theme in themes:
-                    stats['themes'][theme] += 1
+                    if theme and theme != '无':
+                        stats['themes'][theme] += 1
+
+                # 新增：统计标准化主题
+                primary_theme_name = safe_get(event_result, 'primary_theme_name', '')
+                if primary_theme_name:
+                    stats.setdefault('normalized_themes', Counter())
+                    stats['normalized_themes'][primary_theme_name] += 1
+
+                # 新增：统计交易优先级
+                trade_priority = safe_get(event_result, 'trade_priority', 'watch')
+                stats.setdefault('trade_priorities', Counter())
+                stats['trade_priorities'][trade_priority] += 1
+
+                # 新增：统计风险标记
+                risk_flags = safe_get(event_result, 'risk_flags', [])
+                if risk_flags:
+                    stats.setdefault('risk_flags_count', 0)
+                    stats['risk_flags_count'] += 1
 
                 # 打印 AI 结果
                 print_ai_result(event_result, verbose=args.verbose)
@@ -421,11 +519,16 @@ def main():
     print_separator()
     print(f"拉取新闻数: {stats['total']}")
     print(f"去重后新闻数: {stats['after_dedup']}")
+    print(f"unknown二次过滤修正数: {stats.get('unknown_refined', 0)}")
     print(f"need_ai: {stats['need_ai']}")
     print(f"skipped: {stats['skipped']}")
     print(f"AI成功: {stats['ai_success']}")
     print(f"AI失败: {stats['ai_failed']}")
     print(f"fallback: {stats['fallback']}")
+    print(f"市场相关事件数: {stats.get('market_relevant_count', 0)}")
+    print(f"关联股票总数: {stats.get('related_stock_count', 0)}")
+    print(f"关联实体总数: {stats.get('related_entity_count', 0)}")
+    print(f"有风险标记事件数: {stats.get('risk_flags_count', 0)}")
     print()
 
     if stats['actions']:
@@ -447,9 +550,21 @@ def main():
         print()
 
     if stats['themes']:
-        print("主题分布:")
+        print("主题分布(AI原始):")
         for theme, count in stats['themes'].most_common(10):
             print(f"  {theme}: {count}")
+        print()
+
+    if stats.get('normalized_themes'):
+        print("标准化主题分布:")
+        for theme, count in stats['normalized_themes'].most_common(10):
+            print(f"  {theme}: {count}")
+        print()
+
+    if stats.get('trade_priorities'):
+        print("交易优先级分布:")
+        for priority, count in stats['trade_priorities'].most_common():
+            print(f"  {priority}: {count}")
         print()
 
     print_separator()

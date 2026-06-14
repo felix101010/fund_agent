@@ -14,7 +14,7 @@ class OllamaClient:
         self,
         base_url: str = None,
         model: str = None,
-        timeout: int = 60
+        timeout: int = 600
     ):
         """
         初始化 Ollama 客户端
@@ -25,7 +25,7 @@ class OllamaClient:
                 - 本地: http://localhost:11434
             model: 模型名称（默认从环境变量 OLLAMA_MODEL 读取，否则 qwen2.5:7b）
                 例如 qwen2.5:7b, qwen2.5:1.5b, llama3.1:8b
-            timeout: 请求超时时间（秒）
+            timeout: 请求超时时间（秒，默认600秒）
         """
         self.base_url = (base_url or os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")).rstrip('/')
         self.model = model or os.getenv("OLLAMA_MODEL", "qwen2.5:7b")

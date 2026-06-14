@@ -1,0 +1,59 @@
+            # 4. PDF下载和文本提取（统一状态控制）
+            if self.should_parse_pdf(filter_result.need_pdf, pdf_url, filter_result.announcement_type):
+                # 需要解析PDF
+                result.pdf_download_status = "pending"
+                result.pdf_parse_status = "pending"
+
+                try:
+                    # 下载PDF（不传action/need_pdf，downloader只管下载）
+                    download_result = self.pdf_downloader.download(
+                        announcement_id=announcement_id,
+                        pdf_url=pdf_url,
+                        publish_time=publish_time
+                    )
+
+                    if download_result['status'] == 'success':
+                        # 下载成功
+                        result.pdf_download_status = "success"
+                        result.pdf_local_path = download_result['local_path']
+
+                        # 提取PDF文本
+                        extract_result = self.pdf_extractor.extract(result.pdf_local_path)
+
+                        if extract_result['status'] == 'success':
+                            # 提取成功
+                            result.pdf_parse_status = "success"
+                            result.pdf_parsed = True
+                            result.pdf_text_length = extract_result.get('text_length', len(extract_result.get('text', '')))
+                            result.pdf_text_preview = extract_result.get('text', '')[:1000]
+                            result.pdf_extraction_method = extract_result.get('method', '')
+                            result.postprocess_notes.append(f"PDF已解析（{extract_result.get('method')}），待后续正文事件抽取")
+                        else:
+                            # 提取失败
+                            result.pdf_parse_status = "failed"
+                            result.pdf_parsed = False
+                            result.pdf_parse_error = extract_result.get('error', '')
+                            result.error_tags.append('pdf_parse_failed')
+                    else:
+                        # 下载失败
+                        result.pdf_download_status = "failed"
+                        result.pdf_parse_status = "failed"
+                        result.pdf_parsed = False
+                        result.pdf_parse_error = download_result.get('error', '')
+                        result.error_tags.append('pdf_download_failed')
+
+                except Exception as e:
+                    # PDF处理异常（不中断pipeline）
+                    result.pdf_download_status = "failed"
+                    result.pdf_parse_status = "failed"
+                    result.pdf_parsed = False
+                    result.pdf_parse_error = f"PDF处理异常: {str(e)}"
+                    result.error_tags.append('pdf_process_exception')
+            else:
+                # 不需要解析PDF - 统一设置not_required
+                result.pdf_download_status = "not_required"
+                result.pdf_parse_status = "not_required"
+                result.pdf_parsed = False
+                result.pdf_local_path = ""
+                result.pdf_parse_error = ""
+                # 不添加error_tags

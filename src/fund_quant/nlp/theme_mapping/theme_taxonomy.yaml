@@ -1,0 +1,416 @@
+# 主题分类标准体系
+# 用于标准化AI输出的自然语言主题
+
+ai_compute:
+  canonical_name: AI算力
+  aliases:
+    - AI算力
+    - 算力
+    - 大模型算力
+    - 数据中心
+    - AIDC
+    - GPU服务器
+    - AI服务器
+    - 算力中心
+  index_codes:
+    - 931865.CSI
+  etf_codes:
+    - 516980.SH
+  industry_chain:
+    - 上游芯片
+    - 服务器
+    - 液冷
+    - 电源
+    - 光模块
+    - 数据中心
+
+robot:
+  canonical_name: 机器人
+  aliases:
+    - 机器人
+    - 具身智能
+    - 人形机器人
+    - 家庭服务机器人
+    - 机器人技术
+    - 服务机器人
+    - 工业机器人
+  index_codes:
+    - H30590.CSI
+  etf_codes:
+    - 562500.SH
+  industry_chain:
+    - 减速器
+    - 伺服系统
+    - 控制器
+    - 传感器
+    - 整机
+
+semiconductor_material:
+  canonical_name: 半导体材料
+  aliases:
+    - 半导体材料
+    - 靶材
+    - 光刻胶
+    - 电子特气
+    - CMP材料
+    - 先进制程材料
+    - 半导体
+  index_codes:
+    - H30184.CSI
+    - H30007.CSI
+  etf_codes:
+    - 159516.SZ
+    - 516350.SH
+  industry_chain:
+    - 材料
+    - 设备
+    - 晶圆制造
+    - 封测
+
+optical_module:
+  canonical_name: 光模块
+  aliases:
+    - 光模块
+    - CPO
+    - 800G
+    - 1.6T
+    - 硅光
+    - 光通信
+  index_codes:
+    - 931865.CSI
+  etf_codes:
+    - 516980.SH
+  industry_chain:
+    - 光芯片
+    - 光模块
+    - 光纤光缆
+    - 光通信设备
+
+power_grid_equipment:
+  canonical_name: 电网设备
+  aliases:
+    - 电网设备
+    - 变压器
+    - 特高压
+    - 电力设备
+    - 配电设备
+    - 输变电
+    - 开关设备
+    - 电力自动化
+    - AI电力
+    - 数据中心电力
+  index_codes:
+    - 931663.CSI
+  etf_codes:
+    - 159326.SZ
+  industry_chain:
+    - 变压器
+    - 开关设备
+    - 特高压
+    - 配网
+    - 电力自动化
+
+satellite:
+  canonical_name: 卫星产业
+  aliases:
+    - 卫星
+    - 商业航天
+    - 低轨卫星
+    - 卫星互联网
+    - 卫星通信
+    - SpaceX
+  index_codes:
+    - 931865.CSI
+  etf_codes: []
+  industry_chain:
+    - 卫星制造
+    - 火箭发射
+    - 地面设备
+    - 卫星应用
+
+new_energy_vehicle:
+  canonical_name: 新能源车
+  aliases:
+    - 新能源车
+    - 新能源汽车
+    - 电动车
+    - 智能驾驶
+    - 自动驾驶
+    - 智能座舱
+    - 车载显示
+    - HUD
+    - 域控
+    - 线控底盘
+  index_codes:
+    - 930997.CSI
+  etf_codes:
+    - 515030.SH
+  industry_chain:
+    - 整车
+    - 电池
+    - 电机电控
+    - 智能驾驶
+    - 充电桩
+
+xr_optics:
+  canonical_name: XR光学
+  aliases:
+    - 光波导
+    - 体全息光波导
+    - 全息光波导
+    - AR光学
+    - AR眼镜
+    - VR眼镜
+    - XR
+    - 近眼显示
+    - 光学模组
+    - 衍射光波导
+    - 几何光波导
+  index_codes:
+    - 931865.CSI
+  etf_codes:
+    - 159896.SZ
+  industry_chain:
+    - 光学元件
+    - 显示模组
+    - AR设备
+    - XR设备
+    - 消费电子
+
+energy_storage:
+  canonical_name: 储能
+  aliases:
+    - 储能
+    - 固态电池
+    - 电池
+    - 储能系统
+    - 电化学储能
+  index_codes:
+    - H30184.CSI
+  etf_codes:
+    - 159863.SZ
+  industry_chain:
+    - 电池
+    - 逆变器
+    - PCS
+    - 储能系统集成
+
+innovative_drug:
+  canonical_name: 创新药
+  aliases:
+    - 创新药
+    - 新药
+    - 医药
+    - 生物医药
+    - 创新疗法
+    - 医疗器械
+  index_codes:
+    - 931152.CSI
+  etf_codes:
+    - 512290.SH
+  industry_chain:
+    - 药物研发
+    - CRO
+    - CDMO
+    - 医药制造
+
+ai_medical:
+  canonical_name: AI医疗
+  aliases:
+    - AI医疗
+    - 医疗AI
+    - 大模型医疗
+    - 医疗大模型
+    - 智慧医疗
+    - 专科大模型
+  index_codes:
+    - 931152.CSI
+  etf_codes:
+    - 512290.SH
+  industry_chain:
+    - AI算法
+    - 医疗数据
+    - 医疗器械
+    - 医疗服务
+
+ai_industrial:
+  canonical_name: AI工业应用
+  aliases:
+    - AI工业应用
+    - 工业AI
+    - 智能制造
+    - AI炼钢
+    - 工业大模型
+    - 工业互联网
+  index_codes:
+    - 931865.CSI
+  etf_codes: []
+  industry_chain:
+    - 工业软件
+    - 工业互联网平台
+    - 工业设备
+    - 传感器
+
+low_altitude_economy:
+  canonical_name: 低空经济
+  aliases:
+    - 低空经济
+    - eVTOL
+    - 飞行汽车
+    - 无人机
+    - 低空飞行
+  index_codes: []
+  etf_codes:
+    - 159909.SZ
+  industry_chain:
+    - 飞行器制造
+    - 动力系统
+    - 飞控系统
+    - 低空基础设施
+
+real_estate_policy:
+  canonical_name: 房地产政策
+  aliases:
+    - 房地产政策
+    - 收储
+    - 存量房收购
+    - 保障房
+    - 租赁住房
+    - 城中村改造
+    - 房地产
+  index_codes: []
+  etf_codes: []
+  industry_chain:
+    - 地产开发
+    - 物业
+    - 建材
+    - 家居
+    - 银行
+
+general_policy:
+  canonical_name: 泛政策
+  aliases:
+    - 政策
+    - 政策措施
+    - 政策发布
+    - 政策会议
+    - 交流合作
+    - 对接签约
+  index_codes: []
+  etf_codes: []
+  industry_chain: []
+
+battery_material:
+  canonical_name: 电池材料
+  aliases:
+    - 锂电材料
+    - 电解液
+    - 锂电池电解液
+    - 电解液添加剂
+    - VC添加剂
+    - FEC添加剂
+    - 六氟磷酸锂
+    - 动力电池材料
+    - 电池添加剂
+    - 电池材料
+  index_codes: []
+  etf_codes: []
+  industry_chain:
+    - 动力电池
+    - 储能
+    - 新能源车
+  related_concepts:
+    - 动力电池
+    - 储能
+    - 新能源车
+
+smart_security:
+  canonical_name: 智能安防
+  aliases:
+    - 智能安防
+    - 安防
+    - AI视觉
+    - 机器视觉
+    - 视频监控
+    - 智能化技防
+    - 智防
+    - 安全生产智能化
+  index_codes: []
+  etf_codes: []
+  industry_chain:
+    - 人工智能
+    - 工业安全
+    - 城市治理
+  related_concepts:
+    - 人工智能
+    - 工业安全
+    - 城市治理
+
+smart_water:
+  canonical_name: 智慧水务
+  aliases:
+    - 智慧水务
+    - 水利基础设施
+    - 节水灌溉
+    - 水利建设
+    - 生态环保
+    - 水利融合
+    - 乡村振兴水利
+  index_codes: []
+  etf_codes: []
+  industry_chain:
+    - 水利建设
+    - 农业节水
+    - 环保
+  related_concepts:
+    - 水利建设
+    - 农业节水
+    - 环保
+
+salt_lake_lithium:
+  canonical_name: 盐湖提锂
+  aliases:
+    - 盐湖
+    - 盐湖产业
+    - 盐湖产业基地
+    - 盐湖提锂
+    - 锂资源
+    - 钾肥
+    - 镁业
+    - 盐湖镁业
+  index_codes: []
+  etf_codes: []
+  industry_chain:
+    - 锂电材料
+    - 新能源材料
+    - 资源品
+  related_concepts:
+    - 锂电材料
+    - 新能源材料
+    - 资源品
+
+oil_shipping:
+  canonical_name: 油气航运
+  aliases:
+    - 霍尔木兹海峡
+    - 油轮
+    - 原油运输
+    - 航道封锁
+    - 商船通行
+    - 海峡关闭
+    - 原油供给
+    - 油气运输
+  index_codes: []
+  etf_codes: []
+  industry_chain:
+    - 原油
+    - 航运
+    - 油气
+    - 化工
+  related_concepts:
+    - 原油
+    - 航运
+    - 油气
+    - 化工
+    - 通胀
+

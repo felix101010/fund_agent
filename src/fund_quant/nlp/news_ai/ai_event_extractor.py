@@ -7,7 +7,7 @@ from typing import Any, Optional
 from fund_quant.nlp.news_ai.ai_event_models import AIEventResult, RelatedStock
 from fund_quant.nlp.news_ai.prompt_builder import PromptBuilder, get_field
 from fund_quant.nlp.news_ai.ai_result_validator import AIResultValidator
-from fund_quant.nlp.news_ai.ai_output_post_processor import AIOutputPostProcessor
+from fund_quant.nlp.news_ai.ai_output_post_processor_enhanced import AIOutputPostProcessor
 
 
 class AIEventExtractor:
@@ -106,47 +106,21 @@ class AIEventExtractor:
             prompt = self.prompt_builder.build(news, filter_result)
             raw_response = self.llm_client.generate(prompt)
 
-            # 解析 AI 原始输出
-            try:
-                ai_raw_result = json.loads(self._clean_json_response(raw_response))
-            except json.JSONDecodeError:
-                # JSON 解析失败，使用 fallback
-                print(f"⚠️  AI 输出 JSON 解析失败，使用 fallback")
-                fallback_result = self._fallback_rule_extract(news, filter_result)
-                fallback_result.raw_ai_response = raw_response
-                fallback_result.validation_errors.append("AI输出JSON解析失败，已使用fallback结果")
-                return fallback_result
+            # 验证 AI 原始输出
+            result = self.validator.validate(news, filter_result, raw_response)
 
-            # 获取新闻字段
-            title = get_field(news, 'title', '')
-            content = get_field(news, 'content', '')
-
-            # 后处理：归一化、纠偏、补全
-            processed_result = self.post_processor.process(
-                title=title,
-                content=content,
-                ai_result=ai_raw_result,
-                rule_result=None
-            )
-
-            # 打印后处理信息（便于调试）
-            if processed_result.get('corrections'):
-                print(f"🔧 后处理修正: {processed_result['corrections']}")
-
-            # 构造 JSON 用于验证
-            processed_json = json.dumps(processed_result, ensure_ascii=False)
-
-            # 最终验证
-            result = self.validator.validate(news, filter_result, processed_json)
-
-            # 如果验证仍然失败，使用 fallback
+            # 如果验证失败，使用 fallback
             if not result.is_valid:
-                print(f"⚠️  后处理结果验证失败: {result.validation_errors}")
+                print(f"⚠️  AI 输出验证失败: {result.validation_errors}")
                 fallback_result = self._fallback_rule_extract(news, filter_result)
                 fallback_result.raw_ai_response = raw_response
-                fallback_result.validation_errors.append("后处理结果验证失败，已使用fallback结果")
-                fallback_result.is_valid = True
+                fallback_result.validation_errors.append("AI输出验证失败，已使用fallback结果")
+                # fallback 结果也需要后处理
+                fallback_result = self.post_processor.process(news, filter_result, fallback_result)
                 return fallback_result
+
+            # AI 输出有效，进行后处理
+            result = self.post_processor.process(news, filter_result, result)
 
             return result
 
@@ -275,7 +249,12 @@ class AIEventExtractor:
 
         # 通过 validator 验证（保持路径一致）
         raw_response = json.dumps(fallback_data, ensure_ascii=False)
-        return self.validator.validate(news, filter_result, raw_response)
+        result = self.validator.validate(news, filter_result, raw_response)
+
+        # fallback 结果也需要后处理
+        result = self.post_processor.process(news, filter_result, result)
+
+        return result
 
     def _identify_theme(self, text: str) -> str:
         """

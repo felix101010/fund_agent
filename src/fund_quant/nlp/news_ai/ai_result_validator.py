@@ -15,11 +15,12 @@ class AIResultValidator:
     # 白名单定义
     VALID_EVENT_TYPES = [
         # A 股产业事件
-        "order_win", "price_increase", "mass_production", "capacity_build",
+        "order_win", "order_growth", "price_increase", "mass_production", "capacity_build",
         "verification_pass", "sample_delivery", "supply_chain",
         "product_release", "technical_breakthrough", "strategic_cooperation",
+        "platform_launch", "benchmark_release", "dataset_release", "research_release",
         # 政策监管
-        "policy_release", "macro_policy",
+        "policy_release", "macro_policy", "regional_policy",
         # 资本市场
         "mna", "ipo",
         # 风险事件
@@ -33,9 +34,18 @@ class AIResultValidator:
         "rating_upgrade", "rating_downgrade", "stock_price_move",
         # 宏观金融
         "bond_issue", "fx_move", "geopolitics",
+        # 行业活动
+        "industry_activity", "trade_fair_result", "business_metric_growth",
         # 通用
         "general"
     ]
+
+    # 事件类型映射（非白名单映射到白名单）
+    EVENT_TYPE_MAPPING = {
+        "news_update": "general",
+        "company_update": "general",
+        "announcement": "general"
+    }
 
     VALID_SENTIMENTS = ["positive", "neutral", "negative"]
     VALID_EVENT_LEVELS = ["S", "A", "B", "C"]
@@ -142,6 +152,29 @@ class AIResultValidator:
         confidence = data.get('confidence', 0.0)
         risk_flags = data.get('risk_flags', [])
 
+        # ===== 新增：字段类型严格校验 =====
+
+        # 1. 校验 event_level 只能是 S/A/B/C
+        if event_level not in self.VALID_EVENT_LEVELS:
+            # 检查是否误填了 sentiment 值到 event_level
+            if event_level in self.VALID_SENTIMENTS:
+                validation_errors.append(f"event_level错误填写为sentiment值: {event_level}，已修正为C，sentiment设为{event_level}")
+                sentiment = event_level  # 移动到sentiment
+                event_level = "C"  # 修正为C
+            else:
+                validation_errors.append(f"非法 event_level: {event_level}，必须是 {self.VALID_EVENT_LEVELS}，已修正为C")
+                event_level = "C"
+
+        # 2. 校验 sentiment 只能是 positive/neutral/negative
+        if sentiment not in self.VALID_SENTIMENTS:
+            # 检查是否误填了 event_level 值到 sentiment
+            if sentiment in self.VALID_EVENT_LEVELS:
+                validation_errors.append(f"sentiment错误填写为event_level值: {sentiment}，已修正为neutral")
+                sentiment = "neutral"
+            else:
+                validation_errors.append(f"非法 sentiment: {sentiment}，必须是 {self.VALID_SENTIMENTS}，已修正为neutral")
+                sentiment = "neutral"
+
         # 记录缺失字段的警告（不影响 is_valid）
         # 不再对 theme 给警告，只要有 themes 就认为主题字段存在
         optional_fields = ['sub_themes', 'related_stocks', 'summary', 'confidence', 'risk_flags']
@@ -154,13 +187,7 @@ class AIResultValidator:
             validation_errors.append(f"themes 必须是 list，当前类型: {type(themes)}")
             themes = []
 
-        # 验证 sentiment
-        if sentiment not in self.VALID_SENTIMENTS:
-            validation_errors.append(f"非法 sentiment: {sentiment}，必须是 {self.VALID_SENTIMENTS}")
-
-        # 验证 event_level
-        if event_level not in self.VALID_EVENT_LEVELS:
-            validation_errors.append(f"非法 event_level: {event_level}，必须是 {self.VALID_EVENT_LEVELS}")
+        # 不再重复验证 sentiment 和 event_level（已在上面严格校验）
 
         # 验证 novelty_type
         if novelty_type not in self.VALID_NOVELTY_TYPES:
@@ -168,7 +195,14 @@ class AIResultValidator:
 
         # 验证 event_type
         if event_type not in self.VALID_EVENT_TYPES:
-            validation_errors.append(f"非法 event_type: {event_type}，必须在白名单中")
+            # 尝试映射到白名单
+            if hasattr(self, 'EVENT_TYPE_MAPPING') and event_type in self.EVENT_TYPE_MAPPING:
+                mapped_type = self.EVENT_TYPE_MAPPING[event_type]
+                validation_errors.append(f"非法 event_type: {event_type}，已映射为 {mapped_type}")
+                event_type = mapped_type
+            else:
+                validation_errors.append(f"非法 event_type: {event_type}，已修正为 general")
+                event_type = "general"
 
         # 验证 confidence
         try:
@@ -184,26 +218,29 @@ class AIResultValidator:
             validation_errors.append(f"sub_themes 必须是 list，当前类型: {type(sub_themes)}")
             sub_themes = []
 
-        # 验证 related_stocks
+        # 验证 related_stocks（增强：必须包含name/code/reason，否则删除）
         related_stocks_list = []
         if not isinstance(data.get('related_stocks', []), list):
             validation_errors.append(f"related_stocks 必须是 list")
         else:
             for idx, stock in enumerate(data.get('related_stocks', [])):
                 if isinstance(stock, dict):
-                    code = stock.get('code', '')
-                    name = stock.get('name', '')
-                    reason = stock.get('reason', '')
+                    code = stock.get('code', '').strip()
+                    name = stock.get('name', '').strip()
+                    reason = stock.get('reason', '').strip()
 
-                    # 字段缺失警告
-                    if not code:
-                        validation_errors.append(f"related_stocks[{idx}] 缺少 code")
-                    if not name:
-                        validation_errors.append(f"related_stocks[{idx}] 缺少 name")
-                    if not reason:
-                        validation_errors.append(f"related_stocks[{idx}] 缺少 reason")
+                    # 必须包含name/code/reason，否则删除该条
+                    if not name or not code or not reason:
+                        validation_errors.append(f"related_stocks[{idx}] 缺少必填字段(name={name}, code={code}, reason={reason})，已删除")
+                        continue  # 跳过该条
 
-                    # 即使缺失也创建对象，用空字符串填充
+                    # 检查是否为非股票实体（国家、人物、机构）
+                    # 这些应该在related_entities中，不应该在related_stocks
+                    non_stock_keywords = ["中国", "美国", "伊朗", "议员", "总监", "部长", "大使", "商会", "协会", "医院", "政府"]
+                    if any(kw in name for kw in non_stock_keywords):
+                        validation_errors.append(f"related_stocks[{idx}] 包含非股票实体: {name}，应移到related_entities")
+                        continue  # 跳过该条
+
                     related_stocks_list.append(RelatedStock(
                         code=code,
                         name=name,

@@ -4,6 +4,7 @@
 
 # 一、风险关键词（最高优先级）
 # 注意：减持、处罚、亏损等不在此列，它们有专门的 event_type
+# 风险关键词映射到 risk_flags
 RISK_KEYWORDS = [
     "澄清",
     "暂无相关业务",
@@ -15,6 +16,8 @@ RISK_KEYWORDS = [
     "尚未量产",
     "尚未形成收入",
     "未形成收入",
+    "暂未产生收入",
+    "尚未贡献收入",
     "收入占比较小",
     "对公司业绩影响较小",
     "风险提示",
@@ -39,11 +42,38 @@ RISK_KEYWORDS = [
     "监察调查",
     "涉嫌严重违纪违法",
     "立案调查",
-    "被查"
+    "被查",
+    "传闻",
+    "网传",
+    "未证实"
 ]
+
+# 风险关键词到 risk_flag 的映射
+RISK_KEYWORD_TO_FLAG = {
+    "未形成收入": "not_recognized_revenue",
+    "尚未形成收入": "not_recognized_revenue",
+    "暂未产生收入": "not_recognized_revenue",
+    "尚未贡献收入": "not_recognized_revenue",
+    "收入占比较小": "not_recognized_revenue",
+    "传闻": "rumor_or_unconfirmed",
+    "网传": "rumor_or_unconfirmed",
+    "未证实": "rumor_or_unconfirmed",
+    "澄清": "negative_disconfirm",
+    "不涉及": "negative_disconfirm",
+    "未涉及": "negative_disconfirm",
+    "暂无相关业务": "negative_disconfirm",
+    "接受审查调查": "regulatory_risk",
+    "立案调查": "regulatory_risk",
+    "被查": "regulatory_risk",
+    "问询函": "regulatory_risk",
+    "监管函": "regulatory_risk",
+    "纪律审查": "regulatory_risk",
+    "监察调查": "regulatory_risk"
+}
 
 # 二、强事件关键词（高价值催化）
 # 排除：国债招标等宏观金融类招标
+# 注意："突破"已移除，需要上下文判断（避免"项目数突破600项"误判）
 STRONG_EVENT_KEYWORDS = [
     "中标",
     "订单",
@@ -71,8 +101,9 @@ STRONG_EVENT_KEYWORDS = [
     "国内首个",
     "全球首个",
     "行业首个",
-    "突破",
-    "重大突破",
+    "技术突破",  # 明确为技术突破
+    "核心技术突破",
+    "关键技术突破",
     "并购",
     "重组",
     "收购",
@@ -89,6 +120,20 @@ STRONG_EVENT_KEYWORDS = [
     "控制权变更",
     "实控人变更",
     "过户完成"
+]
+
+# 新增：业务指标关键词（数量突破，非技术突破）
+BUSINESS_METRIC_KEYWORDS = [
+    "项目数", "成交额", "参展人数", "客流量", "签约数",
+    "票房", "用户数", "销售额", "规模", "数量", "订单数",
+    "突破", "超过", "达到", "创新高"
+]
+
+# 新增：真实技术突破上下文关键词
+TECH_BREAKTHROUGH_CONTEXT = [
+    "技术突破", "核心技术", "关键技术", "国产替代", "首创",
+    "研发成功", "攻克", "实现量产", "验证通过", "自主研发",
+    "技术创新", "专利", "知识产权"
 ]
 
 # 三、候选关键词（潜在题材/新方向）
@@ -313,6 +358,7 @@ AUTHORITATIVE_SOURCES = [
 
 __all__ = [
     'RISK_KEYWORDS',
+    'RISK_KEYWORD_TO_FLAG',
     'STRONG_EVENT_KEYWORDS',
     'CANDIDATE_KEYWORDS',
     'STRONG_ENTITY_KEYWORDS',
@@ -324,5 +370,7 @@ __all__ = [
     'MARKET_DATA_KEYWORDS',
     'EXEC_NORMAL_CHANGE_KEYWORDS',
     'SOCIAL_GOVERNANCE_KEYWORDS',
-    'AUTHORITATIVE_SOURCES'
+    'AUTHORITATIVE_SOURCES',
+    'BUSINESS_METRIC_KEYWORDS',
+    'TECH_BREAKTHROUGH_CONTEXT'
 ]
