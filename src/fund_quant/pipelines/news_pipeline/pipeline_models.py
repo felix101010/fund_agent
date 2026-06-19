@@ -20,8 +20,11 @@ class NewsProcessResult:
     publish_time: datetime
     url: str
 
+    # 新闻源角色
+    source_role: str = ""  # 例如：a_share_catalyst/market_context/macro_event
+
     # 去重标记
-    is_new: bool  # 是否为新增新闻
+    is_new: bool = False  # 是否为新增新闻
 
     # 处理结果
     filter_result: Any = None  # SimpleRuleFilter结果
@@ -39,6 +42,7 @@ class NewsProcessResult:
     # 处理状态
     processing_status: str = "pending"  # pending/success/failed/skipped
     processing_error: str = ""
+    ai_failed: bool = False
     created_at: datetime = field(default_factory=datetime.now)
 
 

@@ -1,6 +1,11 @@
 """
-财联社批次处理流水线
+财联社批次处理流水线（历史专用版本）
 单轮抓取 + 去重 + 处理 + 保存
+
+注意：
+- 这是历史遗留的财联社专用 pipeline
+- 新新闻源建议使用 NewsBatchPipeline（news_batch_pipeline.py）
+- 本文件暂时保留以兼容现有脚本
 """
 from datetime import datetime
 from pathlib import Path

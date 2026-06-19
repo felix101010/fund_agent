@@ -61,6 +61,21 @@ class StockEntityResolver:
         "徐工机械": "000425.SZ",
         "海康威视": "002415.SZ",
         "富祥股份": "300497.SZ",
+        # 新增公司映射
+        "百利天恒": "688506.SH",
+        "百奥泰": "688177.SH",
+        "立昂微": "605358.SH",
+        "拉普拉斯": "688726.SH",
+        "松发股份": "603268.SH",
+        "普莱柯": "603566.SH",
+        "阳谷华泰": "300121.SZ",
+        "新金路": "000510.SZ",
+        "和远气体": "002971.SZ",
+        "电光科技": "002730.SZ",
+        "大禹节水": "300021.SZ",
+        "中色股份": "000758.SZ",
+        "富奥股份": "000030.SZ",
+        "英搏尔": "300681.SZ",
     }
 
     # 公司到默认主题映射
@@ -114,6 +129,74 @@ class StockEntityResolver:
             symbol_map: 股票名称到代码的映射表，如果为 None 则使用默认映射
         """
         self.symbol_map = symbol_map if symbol_map is not None else self.DEFAULT_SYMBOL_MAP.copy()
+
+    def resolve_company_name(self, name: str) -> dict | None:
+        """
+        根据公司简称/别名解析股票（新增方法）
+
+        Args:
+            name: 公司名称
+
+        Returns:
+            {
+                "name": "富祥股份",
+                "code": "300497.SZ",
+                "match_source": "title_rule",
+                "match_confidence": 0.95
+            } 或 None
+        """
+        if not name or not isinstance(name, str):
+            return None
+
+        name = name.strip()
+
+        # 1. 直接匹配symbol_map
+        if name in self.symbol_map:
+            return {
+                "name": name,
+                "code": self.symbol_map[name],
+                "match_source": "title_rule",
+                "match_confidence": 0.95
+            }
+
+        # 2. 匹配COMPANY_THEME_MAP的key或aliases
+        for company, info in self.COMPANY_THEME_MAP.items():
+            if company == name:
+                return {
+                    "name": company,
+                    "code": info["code"],
+                    "match_source": "title_rule",
+                    "match_confidence": 0.95
+                }
+            # 检查aliases
+            aliases = info.get("aliases", [])
+            if name in aliases:
+                return {
+                    "name": company,
+                    "code": info["code"],
+                    "match_source": "title_rule",
+                    "match_confidence": 0.90
+                }
+
+        # 3. 简称清洗匹配（低优先级）
+        cleaned_name = name
+        # 去掉常见后缀
+        for suffix in ["股份有限公司", "有限公司", "集团", "股份", "科技"]:
+            if cleaned_name.endswith(suffix):
+                cleaned_name = cleaned_name[:-len(suffix)]
+                break
+
+        # 用清洗后的名称再匹配一次
+        if cleaned_name != name and cleaned_name in self.symbol_map:
+            return {
+                "name": cleaned_name,
+                "code": self.symbol_map[cleaned_name],
+                "match_source": "title_rule",
+                "match_confidence": 0.85
+            }
+
+        # 4. 无法匹配
+        return None
 
     def get_company_default_theme(self, company_name: str) -> dict:
         """

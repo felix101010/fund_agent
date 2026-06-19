@@ -1,14 +1,22 @@
 """
 实体链接模块
 """
-from fund_quant.nlp.entity_linking.stock_entity_resolver import (
-    RelatedEntity,
+from .stock_entity_resolver import (
+    StockEntityResolver,
     StockResolveResult,
-    StockEntityResolver
+    RelatedEntity
+)
+from .title_company_extractor import (
+    TitleCompanyExtractor,
+    TitleCompanyCandidate,
+    TITLE_COMPANY_BLACKLIST
 )
 
 __all__ = [
-    'RelatedEntity',
+    'StockEntityResolver',
     'StockResolveResult',
-    'StockEntityResolver'
+    'RelatedEntity',
+    'TitleCompanyExtractor',
+    'TitleCompanyCandidate',
+    'TITLE_COMPANY_BLACKLIST'
 ]

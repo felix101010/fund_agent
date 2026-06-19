@@ -34,6 +34,46 @@ class PipelineReporter:
             result: NewsProcessResult
             verbose: 是否详细输出
         """
+        # wallstreetcn 专用打印格式
+        if hasattr(result, 'source') and result.source == 'wallstreetcn':
+            # 跳过重复新闻
+            if hasattr(result, 'processing_status') and result.processing_status == 'skipped':
+                print(f"[SKIP duplicate] {result.news_id} | {result.title[:50]}")
+                return
+
+            # 市场上下文格式
+            print(f"\n{'─'*60}")
+            print(f"Source: {result.source} | Role: {getattr(result, 'source_role', 'market_context')}")
+            print(f"Title: {result.title}")
+
+            if hasattr(result, 'context_type'):
+                print(f"Context Type: {result.context_type}")
+
+            if hasattr(result, 'impact_assets'):
+                assets = ', '.join(result.impact_assets) if result.impact_assets else 'None'
+                print(f"Impact Assets: {assets}")
+
+            if hasattr(result, 'market_bias'):
+                print(f"Market Bias: {result.market_bias}")
+
+            if hasattr(result, 'importance'):
+                print(f"Importance: {result.importance}")
+
+            if hasattr(result, 'ai_level'):
+                print(f"AI Level: {result.ai_level}")
+
+            print(f"Need AI: {result.need_ai}")
+
+            if hasattr(result, 'reason') and result.reason:
+                print(f"Reason: {result.reason}")
+
+            if hasattr(result, 'url') and result.url:
+                print(f"URL: {result.url}")
+
+            print(f"{'─'*60}")
+            return
+
+        # 原有打印逻辑（非 wallstreetcn）
         print(f"\n{'='*80}")
         print(f"新闻: {result.title[:60]}")
         print(f"news_id: {result.news_id}")
@@ -139,6 +179,90 @@ class PipelineReporter:
 
         if daemon_run.error:
             print(f"  ❌ {daemon_run.error}")
+
+    @staticmethod
+    def append_results_to_jsonl(results: list, jsonl_path: str):
+        """
+        追加保存结果列表到 JSONL（支持多源，兼容 source_role 和 market_context）
+
+        Args:
+            results: List[NewsProcessResult]
+            jsonl_path: JSONL文件路径
+        """
+        Path(jsonl_path).parent.mkdir(parents=True, exist_ok=True)
+
+        # 追加模式
+        with open(jsonl_path, 'a', encoding='utf-8') as f:
+            for result in results:
+                record = {
+                    'batch_id': result.batch_id,
+                    'run_id': result.run_id,
+                    'news_id': result.news_id,
+                    'source': result.source,
+                    'source_role': getattr(result, 'source_role', ''),
+                    'title': result.title,
+                    'content': result.content[:200] if result.content else '',
+                    'publish_time': result.publish_time.isoformat() if result.publish_time else None,
+                    'url': result.url,
+                    'is_new': result.is_new,
+                    'need_ai': result.need_ai,
+                    'processing_status': result.processing_status,
+                    'used_fallback': result.used_fallback,
+                    'error_tags': result.error_tags,
+                }
+
+                # wallstreetcn 市场上下文字段
+                if hasattr(result, 'context_type'):
+                    record['context_type'] = getattr(result, 'context_type', '')
+                if hasattr(result, 'impact_assets'):
+                    record['impact_assets'] = getattr(result, 'impact_assets', [])
+                if hasattr(result, 'market_bias'):
+                    record['market_bias'] = getattr(result, 'market_bias', 'neutral')
+                if hasattr(result, 'importance'):
+                    record['importance'] = getattr(result, 'importance', 'low')
+                if hasattr(result, 'ai_level'):
+                    record['ai_level'] = getattr(result, 'ai_level', 'none')
+                if hasattr(result, 'reason'):
+                    record['reason'] = getattr(result, 'reason', '')
+                if hasattr(result, 'theme_hint_ids'):
+                    record['theme_hint_ids'] = getattr(result, 'theme_hint_ids', [])
+                if hasattr(result, 'theme_hint_names'):
+                    record['theme_hint_names'] = getattr(result, 'theme_hint_names', [])
+
+                # 兼容 CLS 字段
+                if result.final_event:
+                    event = result.final_event
+                    record['event_type'] = get_field(event, 'event_type', '')
+                    record['primary_theme_id'] = get_field(event, 'primary_theme_id', '')
+                    record['primary_theme_name'] = get_field(event, 'primary_theme_name', '')
+                    record['trade_priority'] = get_field(event, 'trade_priority', '')
+                    record['final_score'] = get_field(event, 'final_score', 0)
+                    record['risk_flags'] = get_field(event, 'risk_flags', [])
+                    record['confidence'] = get_field(event, 'confidence', 0)
+
+                    # 股票和ETF
+                    related_stocks = get_field(event, 'related_stocks', [])
+                    record['related_stocks_count'] = len(related_stocks)
+                    record['related_stocks'] = [
+                        {'name': get_field(s, 'name', ''), 'code': get_field(s, 'code', '')}
+                        for s in related_stocks
+                    ]
+
+                    related_etfs = get_field(event, 'related_etfs', [])
+                    record['related_etfs'] = related_etfs
+
+                f.write(json.dumps(record, ensure_ascii=False) + '\n')
+
+    @staticmethod
+    def save_batch_summary(batch_result: Any, md_path: str):
+        """
+        保存批次摘要（wrapper方法）
+
+        Args:
+            batch_result: BatchProcessResult
+            md_path: Markdown文件路径
+        """
+        PipelineReporter.save_summary_md(batch_result, Path(md_path))
 
     @staticmethod
     def append_jsonl(batch_result: Any, jsonl_path: Path):

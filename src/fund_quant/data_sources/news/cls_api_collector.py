@@ -5,11 +5,58 @@
 import requests
 import time
 import json
+import re
 from typing import List, Optional
 from datetime import datetime
 import pandas as pd
 
 from fund_quant.common.logger import logger
+
+
+def build_normalized_title(title: str, content: str, max_len: int = 60) -> str:
+    """
+    生成规范化标题
+
+    逻辑：
+    1. 如果 title 非空，清洗后返回
+    2. 如果 title 为空，从 content 生成
+       - 移除"财联社X月X日电，"等前缀
+       - 移除【xxx】标签
+       - 截取前60个字符
+
+    Args:
+        title: 原始标题
+        content: 正文内容
+        max_len: 最大长度，默认60字符
+
+    Returns:
+        规范化后的标题，保证非空
+    """
+    # 如果 title 非空，清洗后返回
+    if title and title.strip():
+        cleaned = title.strip()
+        # 移除【xxx】标签
+        cleaned = re.sub(r'【.*?】', '', cleaned)
+        return cleaned[:max_len] if len(cleaned) > max_len else cleaned
+
+    # title 为空，从 content 生成
+    if not content:
+        return "无标题新闻"
+
+    # 移除"财联社X月X日电，"等前缀
+    cleaned = re.sub(r'^财联社\d+月\d+日[电讯]，', '', content)
+
+    # 移除【xxx】标签
+    cleaned = re.sub(r'^【.*?】', '', cleaned)
+
+    # 去除首尾空白
+    cleaned = cleaned.strip()
+
+    # 截取前 max_len 个字符
+    if len(cleaned) > max_len:
+        cleaned = cleaned[:max_len]
+
+    return cleaned if cleaned else "无标题新闻"
 
 
 class ClsApiCollector:
@@ -111,11 +158,19 @@ class ClsApiCollector:
         # 计算延迟
         delay_seconds = int((now - publish_time).total_seconds())
 
+        # 提取 title 和 content
+        title = item.get('title', '')
+        content = item.get('content', '') or item.get('brief', '')
+
+        # 生成 normalized_title
+        normalized_title = build_normalized_title(title, content)
+
         return {
             'news_id': f"cls_{news_id}",
             'source': 'cls',
-            'title': item.get('title', ''),
-            'content': item.get('content', '') or item.get('brief', ''),
+            'title': title,
+            'content': content,
+            'normalized_title': normalized_title,
             'publish_time': publish_time,
             'url': f"https://www.cls.cn/detail/{news_id}",
             'raw_json': json.dumps(item, ensure_ascii=False),

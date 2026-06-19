@@ -16,7 +16,7 @@ class RawNews:
 
     # 必填字段
     news_id: str                    # 新闻唯一ID（格式：source_原始id）
-    source: str                     # 来源：cls/eastmoney/cninfo
+    source: str                     # 来源：cls/eastmoney/cninfo/wallstreetcn
     publish_time: datetime          # 发布时间
     title: str                      # 标题
     content: str                    # 正文
@@ -24,6 +24,7 @@ class RawNews:
     # 可选字段
     url: Optional[str] = None       # 新闻链接
     raw_json: Optional[str] = None  # 原始JSON（用于溯源）
+    source_role: Optional[str] = None  # 来源角色：announcement/market_context/industry_news
 
     # 时间追踪
     first_seen_time: Optional[datetime] = None  # 系统首次发现时间
@@ -42,6 +43,7 @@ class RawNews:
             'content': self.content,
             'url': self.url,
             'raw_json': self.raw_json,
+            'source_role': self.source_role,
             'first_seen_time': self.first_seen_time,
             'delay_seconds': self.delay_seconds,
             'created_at': self.created_at,
